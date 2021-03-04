@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +22,7 @@ import Adapter.BukuUserAdapter;
 import Api.ApiClient;
 import Model.DataBuku;
 import Model.ListBukuResponse;
+import Model.TotalSeluruhnya;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,6 +47,13 @@ public class DashboardUserActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
+        btrefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tvTotal.setText(String.valueOf("Rp. " +TotalSeluruhnya.TOTALAKHIR));
+            }
+        });
+
         readData();
     }
 
@@ -54,7 +63,7 @@ public class DashboardUserActivity extends AppCompatActivity {
             public void onResponse(Call<ListBukuResponse> call, Response<ListBukuResponse> response) {
                 if (response.isSuccessful()) {
                     if (response.body().getStatus()==1) {
-                        mItems = response.body().getDataBuku();
+                        mItems = response. body().getDataBuku();
                         recyclerView.setAdapter(new BukuUserAdapter(mItems, getApplicationContext()));
                         adapter.notifyDataSetChanged();
                     }
